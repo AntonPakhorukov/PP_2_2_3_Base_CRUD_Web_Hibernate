@@ -11,7 +11,6 @@
     <a th:href="@{/users/edit?id={id}(id=${user.getId()})}"  th:text="'name: ' + ${user.getName()} + ', '">UserName</a>
     <a th:text="'age: ' + ${user.getAge()} + ', '">UserAge</a> <a th:text="'email: ' + ${user.getEmail()}+ '.'">UserEmail</a>
 </div>
-<!-- id?id={id}(id=${user.getId()}) -->
 <br/>
 <hr/>
 <form th:method="GET" th:action="@{/users/new}">

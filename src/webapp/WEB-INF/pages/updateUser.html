@@ -6,7 +6,7 @@
 </head>
 <body>
 <form th:action="@{/users/edit?id={id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
-<!--  ?id={id}(id=${user.getId()})  -->
+    <!--  ?id={id}(id=${user.getId()})  -->
     <label for="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
@@ -20,6 +20,9 @@
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
     <input type="submit" value="Update"/>
+</form>
+<form th:method="DELETE" th:action="@{/users/edit?id={id}(id=${user.getId()})}" th:object="${user}">
+    <input type="submit" value="Delete"/>
 </form>
 </body>
 </html>

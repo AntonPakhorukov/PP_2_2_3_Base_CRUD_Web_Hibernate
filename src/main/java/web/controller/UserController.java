@@ -25,6 +25,7 @@ public class UserController {
 		return "UsersPage";
 	}
 
+
 //	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	@GetMapping("/new")
 	public String newUser(@ModelAttribute("user") User user) {
@@ -53,22 +54,15 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "updateUser";
 		}
+		System.out.println("userUpdate");
 		userService.updateUser(user);
 		return "redirect:/users";
 	}
-//	@PostMapping("/update")
-//	public String updateUser(@RequestParam int id, @RequestParam String name, @RequestParam String email) {
-//		User user = userService.getUserById(id);
-//		if (user != null) {
-//			user.setName(name);
-//			user.setEmail(email);
-//			userService.updateUser(user);
-//		}
-//		return "redirect:/users";
-//	}
 
-	@PostMapping("/delete")
+	@PostMapping("/edit/{id}")
 	public String deleteUser(@RequestParam int id) {
+		System.out.println("id: " + id);
+		System.out.println("userdel: " + userService.getUserById(id));
 		userService.deleteUser(id);
 		return "redirect:/users";
 	}
