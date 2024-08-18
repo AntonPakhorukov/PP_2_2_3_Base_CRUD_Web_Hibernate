@@ -14,56 +14,60 @@ import java.util.List;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+    private UserService userService;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-	@GetMapping
-	public String listUsers(Model model) {
-		List<User> users = userService.getAllUsers();
-		model.addAttribute("users", users);
-		return "UsersPage";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String listUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "UsersPage";
+    }
 
+    @RequestMapping(value = "/id", method = RequestMethod.GET)
+    public String GeyUserById(@RequestParam(value = "id") int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "UserPage";
+    }
 
-//	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	@GetMapping("/new")
-	public String newUser(@ModelAttribute("user") User user) {
-		return "createUser";
-	}
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newUser(@ModelAttribute("user") User user) {
+        return "createUser";
+    }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "createUser";
+        }
+        userService.saveUser(user);
+        return "redirect:/users";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "createUser";
-		}
-		userService.saveUser(user);
-		return "redirect:/users";
-	}
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editUser(@RequestParam(value = "id", required = false) int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "updateUser";
+    }
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String editUser(@RequestParam(value = "id", required = false) int id, Model model) {
-		model.addAttribute("user", userService.getUserById(id));
-		return "updateUser";
-	}
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult,
+                             @RequestParam(value = "id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "updateUser";
+        }
+        System.out.println("userUpdate");
+        userService.updateUser(user);
+        return "redirect:/users";
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-	public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult,
-							 @RequestParam(value = "id") int id) {
-		if (bindingResult.hasErrors()) {
-			return "updateUser";
-		}
-		System.out.println("userUpdate");
-		userService.updateUser(user);
-		return "redirect:/users";
-	}
-
-	@PostMapping("/edit/{id}")
-	public String deleteUser(@RequestParam int id) {
-		System.out.println("id: " + id);
-		System.out.println("userdel: " + userService.getUserById(id));
-		userService.deleteUser(id);
-		return "redirect:/users";
-	}
+    @RequestMapping(value = "/id", method = RequestMethod.DELETE)
+    public String deleteUser(@RequestParam(value = "id") int id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
 }

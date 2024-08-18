@@ -2,27 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit</title>
+    <title>UpdateUser</title>
 </head>
 <body>
 <form th:action="@{/users/edit?id={id}(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
-    <!--  ?id={id}(id=${user.getId()})  -->
     <label for="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name"/>
-    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
     <br/>
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
     <label for="age">Enter age</label>
     <input type="text" th:field="*{age}" id="age">
-    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
     <br/>
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
     <label for="email">Enter email</label>
     <input type="text" th:field="*{email}" id="email">
-    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    <hr/>
     <input type="submit" value="Update"/>
-</form>
-<form th:method="DELETE" th:action="@{/users/edit?id={id}(id=${user.getId()})}" th:object="${user}">
-    <input type="submit" value="Delete"/>
 </form>
 </body>
 </html>
