@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "createUser";
         }
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @RequestParam(value = "id") int id) {
         if (bindingResult.hasErrors()) {
             return "updateUser";
