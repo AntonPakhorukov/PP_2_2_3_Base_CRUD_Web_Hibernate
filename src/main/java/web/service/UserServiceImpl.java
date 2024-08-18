@@ -22,7 +22,7 @@ import java.util.List;
         }
 
         @Override
-        public User getUserById(Long id) {
+        public User getUserById(int id) {
             return userDao.getUserById(id);
         }
 
@@ -37,7 +37,7 @@ import java.util.List;
         }
 
         @Override
-        public void deleteUser(Long id) {
+        public void deleteUser(int id) {
             userDao.deleteUser(id);
         }
 }

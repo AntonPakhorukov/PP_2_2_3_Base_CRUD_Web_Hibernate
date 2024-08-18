@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users</title>
+</head>
+<body>
+<h2>Users List</h2>
+<table border="100">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.name}">John Doe</td>
+        <td th:text="${user.email}">john@example.com</td>
+        <td>
+            <form action="/users/update" method="post">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <input type="text" name="name" th:value="${user.name}">
+                <input type="text" name="email" th:value="${user.email}">
+                <input type="submit" value="Update">
+            </form>
+            <form action="/users/delete" method="post">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h2>Add User</h2>
+<form action="/users/add" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <input type="submit" value="Add">
+</form>
+</body>
+</html>
