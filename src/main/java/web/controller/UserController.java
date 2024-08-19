@@ -22,25 +22,25 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String listUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "UsersPage";
     }
 
-    @RequestMapping(value = "/id", method = RequestMethod.GET)
+    @GetMapping("/id")
     public String GeyUserById(@RequestParam(value = "id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "UserPage";
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
         return "createUser";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "createUser";
@@ -49,13 +49,13 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @GetMapping("/edit")
     public String editUser(@RequestParam(value = "id", required = false) int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "updateUser";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
                              @RequestParam(value = "id") int id) {
         if (bindingResult.hasErrors()) {
@@ -66,7 +66,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "/id", method = RequestMethod.DELETE)
+    @DeleteMapping("/id")
     public String deleteUser(@RequestParam(value = "id") int id) {
         userService.deleteUser(id);
         return "redirect:/users";

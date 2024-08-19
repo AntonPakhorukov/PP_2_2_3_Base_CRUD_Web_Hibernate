@@ -6,10 +6,9 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
+
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager em;
@@ -31,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-    em.merge(user);
+        em.merge(user);
     }
 
     @Override
